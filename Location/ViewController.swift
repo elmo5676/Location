@@ -65,7 +65,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         if let location = locationManager.location {
             let latt = location.coordinate.latitude
             let long = location.coordinate.longitude
-            let alt = location.altitude
+            let alt = location.altitude // in meters
             /* - additional information available
             let course = location.course
             let accuracy = location.horizontalAccuracy
@@ -91,13 +91,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         getposition()
         getOrientation()
     }
-    
-    
-        
-        
-        
-        
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
