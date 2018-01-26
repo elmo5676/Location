@@ -38,7 +38,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         yawLabel.text   = "Yaw: \(String(format: "%.2f°", yaw))"
     }
     func getOrientation(){
-        motionManager.deviceMotionUpdateInterval = 0.1
+        motionManager.deviceMotionUpdateInterval = 0.01
         motionManager.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {(motionData: CMDeviceMotion?, NSError) -> Void in self.outputRPY(data: motionData!)
             if (NSError != nil){
                 print("\(String(describing: NSError))")
@@ -54,6 +54,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // call the below function in viewDidLoad()
     let locationManager = CLLocationManager()
     func getposition(){
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingHeading()
         locationManager.startUpdatingLocation()
         if let heading = locationManager.heading {
