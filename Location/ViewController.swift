@@ -77,18 +77,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let latt = location.coordinate.latitude
             let long = location.coordinate.longitude
             let alt = location.altitude // in meters
-//            let altInMeters = Measurement(value: location.altitude, unit: UnitLength.meters)
-//            let altInFeet = altInMeters.converted(to: UnitLength.feet)
+            let accuracyAlt = location.verticalAccuracy
+            let accuracyHorizontal = location.horizontalAccuracy
             
-            /* - additional information available
-            let course = location.course
-            let accuracy = location.horizontalAccuracy
-            let speed = location.speed
-            let time = location.timestamp
-            */
             lattitudeLabel.text = "Lat: \(String(format: "%.2f", latt))"
             longitudeLabel.text = "Long: \(String(format: "%.2f", long))"
             altitudeLabel.text = "Alt: \(String(format: "%.2f", alt))"
+            verAccLabel.text = "Vert Acc: \(String(format: "%.2f", accuracyAlt))"
+            horAccLabel.text = "Horizontal Acc: \(String(format: "%.2f", accuracyHorizontal))"
+            
+            /* - additional information available
+             let course = location.course
+             let accuracy = location.horizontalAccuracy
+             let speed = location.speed
+             let time = location.timestamp
+             */
         }
     }
     
@@ -99,6 +102,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var pitchLabel: UILabel!
     @IBOutlet var rollLabel: UILabel!
     @IBOutlet var yawLabel: UILabel!
+    @IBOutlet var verAccLabel: UILabel!
+    @IBOutlet var horAccLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
