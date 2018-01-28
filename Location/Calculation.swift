@@ -1,13 +1,8 @@
-//
-//  Calculation.swift
-//  Location
-//
-//  Created by elmo on 1/26/18.
-//  Copyright © 2018 Caerus. All rights reserved.
-//
+//: Playground - noun: a place where people can play
 
+import UIKit
 import Foundation
-
+import Darwin
 
 extension Double {
     //http://www.kylesconverter.com
@@ -16,6 +11,7 @@ extension Double {
     var metersToFeet: Double { return self * 3.2808399 }
     var feetToMeters: Double { return self * 0.3048 }
     var metersToNauticalMiles: Double { return self * 0.0005396118248380001 }
+    var nauticalMilesToMeters: Double { return self * 1852 }
 }
 
 struct Calculation {
@@ -48,34 +44,24 @@ struct Calculation {
         }
         
         //2: centralAngleSolver()
-        let c = d1 + altitudeOfDevice
-        print(c)
-        let a = d1
-        print(a)
-        let A = pitchAngleOfTheDevice.degreesToRadians
-        print(A.radiansToDegrees)
-        //Quadratic Equation
-        let aQuad = 1.0
-        let bQuad = -2.0*c*cos(A)
-        let cQuad = (c*c)-(a*a)
-        let quadSol1 = (-(bQuad)+((bQuad*bQuad)-(4*aQuad*cQuad)).squareRoot())/(2*aQuad)
-        let quadSol2 = (-(bQuad)-((bQuad*bQuad)-(4*aQuad*cQuad)).squareRoot())/(2*aQuad)
-        print(quadSol1.metersToNauticalMiles)
-        print(quadSol2.metersToNauticalMiles)
-        let b = quadSol2
-        
-        let B = acos(((b*b)-(a*a)-(c*c))/(-2*a*c))
-        print("\(B.radiansToDegrees): Center angle in degrees")
+        let a2 = d1 + altitudeOfDevice
+        print(a2)
+        let b2 = sin(pitchAngleOfTheDevice)/d1
+        print(b2)
+        let c2 = Double.pi - asin(a2*b2)
+        print(c2)
+        let d2 = (180 - (pitchAngleOfTheDevice.radiansToDegrees + c2.radiansToDegrees)).degreesToRadians
+        print("\(d2): Central angle")
         
         //3: distanceSolver()
-        let a3 = d1*B
-        print("\(a3.metersToNauticalMiles): distanceToPOICalculated: in NM")
-        print("\(a3): distanceToPOICalculated: in meters")
+        let a3 = (d1*d2).metersToNauticalMiles
+        let b3 = a3/60
+        print("\(a3): distanceToPOICalculated in NM")
         
         //equation #4 is used as a common sense check of the answers
         //4: max distance (line of sight to the horizon) you can see from current altitude
-        let a4 = ((c*c)-(d1*d1)).squareRoot()
-        let maxPitchOfDevice = asin(d1/c)
+        let a4 = ((a2*a2)-(d1*d1)).squareRoot()
+        let maxPitchOfDevice = asin(d1/a2)
         let maxCentralAngle = asin(a4/d1)
         let maxLineOfSightDistance = d1*maxCentralAngle
         for _ in 0..<2 {
@@ -90,8 +76,8 @@ struct Calculation {
         
         //5: coordinate for POI solver
         let a5 = headingAngleOfTheDevice_TN.degreesToRadians
-        let lattitudeAngleOfPOI = a3*sin(a5) + latitudeAngleOfDevice.degreesToRadians
-        let longitudeAngleOfPOI = (a3*cos(a5)/cos(latitudeAngleOfDevice.degreesToRadians))+longitudeAngleOfDevice.degreesToRadians
+        let lattitudeAngleOfPOI = (b3*sin(a5))+latitudeAngleOfDevice
+        let longitudeAngleOfPOI = ((b3/cos(latitudeAngleOfDevice.degreesToRadians))*cos(a5))+longitudeAngleOfDevice
         print("\(lattitudeAngleOfPOI): POI lat")
         print("\(longitudeAngleOfPOI): POI long")
         
@@ -100,12 +86,13 @@ struct Calculation {
         self.altitudeOfDevice = altitudeOfDevice
         self.pitchAngleOfTheDevice = pitchAngleOfTheDevice
         self.earthRadiusCalculated = d1
-        self.centralAngleBetweenCalculated = quadSol2
-        self.cSideOfTraingleCalculated = c
+        self.centralAngleBetweenCalculated = d2
+        self.cSideOfTraingleCalculated = a2
         self.distanceToPOICalculated = a3
         self.lattitudeAngleOfPOI = lattitudeAngleOfPOI
         self.longitudeAngleOfPOI = longitudeAngleOfPOI
         
     }
 }
+
 
