@@ -13,6 +13,7 @@
 		6E5A23A6201AD151008EB13F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A4201AD151008EB13F /* Main.storyboard */; };
 		6E5A23A8201AD151008EB13F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A7201AD151008EB13F /* Assets.xcassets */; };
 		6E5A23AB201AD151008EB13F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A9201AD151008EB13F /* LaunchScreen.storyboard */; };
+		6EFFA071201D4FA400C6EBFF /* UsefulEquations.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,9 @@
 		6E5A23A7201AD151008EB13F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E5A23AA201AD151008EB13F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6E5A23AC201AD151008EB13F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = UsefulEquations.pdf; sourceTree = SOURCE_ROOT; };
+		6EFFA06F201D4FA300C6EBFF /* triangle.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = triangle.playground; sourceTree = SOURCE_ROOT; };
+		6EFFA070201D4FA300C6EBFF /* versionTwo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = versionTwo.playground; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,9 @@
 				6E5A23A7201AD151008EB13F /* Assets.xcassets */,
 				6E5A23A9201AD151008EB13F /* LaunchScreen.storyboard */,
 				6E5A23AC201AD151008EB13F /* Info.plist */,
+				6EFFA06F201D4FA300C6EBFF /* triangle.playground */,
+				6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */,
+				6EFFA070201D4FA300C6EBFF /* versionTwo.playground */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -126,6 +133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EFFA071201D4FA400C6EBFF /* UsefulEquations.pdf in Resources */,
 				6E5A23AB201AD151008EB13F /* LaunchScreen.storyboard in Resources */,
 				6E5A23A8201AD151008EB13F /* Assets.xcassets in Resources */,
 				6E5A23A6201AD151008EB13F /* Main.storyboard in Resources */,
