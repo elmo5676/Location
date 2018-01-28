@@ -27,7 +27,7 @@
 		6E5A23AC201AD151008EB13F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = UsefulEquations.pdf; sourceTree = SOURCE_ROOT; };
 		6EFFA06F201D4FA300C6EBFF /* triangle.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = triangle.playground; sourceTree = SOURCE_ROOT; };
-		6EFFA070201D4FA300C6EBFF /* versionTwo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = versionTwo.playground; sourceTree = SOURCE_ROOT; };
+		6EFFA072201D506200C6EBFF /* versionTwo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = versionTwo.playground; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +69,7 @@
 				6E5A23AC201AD151008EB13F /* Info.plist */,
 				6EFFA06F201D4FA300C6EBFF /* triangle.playground */,
 				6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */,
-				6EFFA070201D4FA300C6EBFF /* versionTwo.playground */,
+				6EFFA072201D506200C6EBFF /* versionTwo.playground */,
 			);
 			path = Location;
 			sourceTree = "<group>";

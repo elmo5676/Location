@@ -25,7 +25,7 @@ struct Calculation {
     var cSideOfTraingleCalculated: Double = 0.0             // c        - meters
     var headingAngleOfTheDevice_TN: Double = 0.0            // 𝜃        - degrees
     var centralAngleBetweenCalculated: Double = 0.0         // α        - radians??
-    var distanceToPOICalculated: Double = 0.0               // d        - meters??
+    var distanceToPOICalculated: Double = 0.0               // d         - meters??
     var lattitudeAngleOfPOI: Double = 0.0                   //
     var longitudeAngleOfPOI: Double = 0.0                   //
     
@@ -53,15 +53,17 @@ struct Calculation {
         let aQuad = 1.0
         let bQuad = -2.0*c*cos(A)
         let cQuad = (c*c)-(a*a)
-        let quadSol1 = (-(bQuad)+((bQuad*bQuad)-(4*aQuad*cQuad)).squareRoot())/(2*aQuad)
-        let quadSol2 = (-(bQuad)-((bQuad*bQuad)-(4*aQuad*cQuad)).squareRoot())/(2*aQuad)
+        let quadSol1 = (-(bQuad)+((bQuad*bQuad)-(4*aQuad*cQuad)).squareRoot())/2
+        let quadSol2 = (-(bQuad)-((bQuad*bQuad)-(4*aQuad*cQuad)).squareRoot())/2
+       
+        
+        
         print(quadSol1.metersToNauticalMiles)
         print(quadSol2.metersToNauticalMiles)
         let b = quadSol2
-        
-        let B = acos(((b*b)-(a*a)-(c*c))/(-2*a*c))
-        print("\(B.radiansToDegrees): Center angle in degrees")
-        
+        let B = asin((sin(A)*b)/a)
+        print(B)
+ 
         //3: distanceSolver()
         let a3 = d1*B
         print("\(a3.metersToNauticalMiles): distanceToPOICalculated: in NM")
@@ -107,7 +109,7 @@ struct Calculation {
 var latitudeAngleOfDevice = 37.0
 var longitudeAngleOfDevice = 90.0
 var altitudeOfDevice = 70_000.0
-var pitchAngleOfTheDevice = 85.0
+var pitchAngleOfTheDevice = 5.0
 var headingAngleOfTheDevice_TN = 165.0
 
 var calc = Calculation(latitudeAngleOfDevice: latitudeAngleOfDevice, longitudeAngleOfDevice: longitudeAngleOfDevice, altitudeOfDevice: altitudeOfDevice.feetToMeters, pitchAngleOfTheDevice: pitchAngleOfTheDevice, headingAngleOfTheDevice_TN: headingAngleOfTheDevice_TN)
