@@ -16,21 +16,21 @@ extension Double {
 
 struct Calculation {
     
-    var latitudeAngleOfDevice: Double                       // 𝜙 (1)    - degrees
-    var longitudeAngleOfDevice: Double                      // λ (1)    - degrees
-    var altitudeOfDevice: Double                            // ζ        - meters
-    var pitchAngleOfTheDevice: Double                       // β        - degrees
-    let majEarthAxis_WGS84: Double = 6_378_137.0            // maj      - meters
-    let minEarthAxis_WGS84: Double = 6_356_752.314_245      // min      - meters
-    var earthRadiusCalculated: Double = 0.0                 // x        - meters
-    var cSideOfTraingleCalculated: Double = 0.0             // c        - meters
-    var headingAngleOfTheDevice_TN: Double = 0.0            // 𝜃        - degrees
-    var centralAngleBetweenCalculated: Double = 0.0         // α        - radians??
-    var distanceToPOICalculated: Double = 0.0               // d        - meters??
-    var lattitudeAngleOfPOI: Double = 0.0                   //
-    var longitudeAngleOfPOI: Double = 0.0                   //
+    var latitudeAngleOfDevice: Double = 0.0                     // 𝜙 (1)    - degrees
+    var longitudeAngleOfDevice: Double = 0.0                    // λ (1)    - degrees
+    var altitudeOfDevice: Double = 0.0                          // ζ        - meters
+    var pitchAngleOfTheDevice: Double = 0.0                     // β        - degrees
+    let majEarthAxis_WGS84: Double = 6_378_137.0                // maj      - meters
+    let minEarthAxis_WGS84: Double = 6_356_752.314_245          // min      - meters
+    var earthRadiusCalculated: Double = 0.0                     // x        - meters
+    var cSideOfTraingleCalculated: Double = 0.0                 // c        - meters
+    var headingAngleOfTheDevice_TN: Double = 0.0                // 𝜃        - degrees
+    var centralAngleBetweenCalculated: Double = 0.0             // α        - radians??
+    var distanceToPOICalculated: Double = 0.0                   // d        - meters??
+    var lattitudeAngleOfPOI: Double = 0.0                       //
+    var longitudeAngleOfPOI: Double = 0.0                       //
     
-    init(latitudeAngleOfDevice: Double, longitudeAngleOfDevice: Double, altitudeOfDevice: Double, pitchAngleOfTheDevice: Double, headingAngleOfTheDevice_TN: Double){
+    mutating func coordsOfPOICalculate(latitudeAngleOfDevice: Double, longitudeAngleOfDevice: Double, altitudeOfDevice: Double, pitchAngleOfTheDevice: Double, headingAngleOfTheDevice_TN: Double) -> [Double] {
         
         //Local Variable names in initializer functions are just placeholders to more easily break up the correction equations
         //1: radiusCorrectionFactor()
@@ -91,6 +91,8 @@ struct Calculation {
         self.distanceToPOICalculated = a3
         self.lattitudeAngleOfPOI = lattitudeAngleOfPOI
         self.longitudeAngleOfPOI = longitudeAngleOfPOI
+        
+        return [lattitudeAngleOfPOI, longitudeAngleOfPOI]
         
     }
 }

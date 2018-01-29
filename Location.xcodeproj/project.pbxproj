@@ -13,6 +13,7 @@
 		6E5A23A6201AD151008EB13F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A4201AD151008EB13F /* Main.storyboard */; };
 		6E5A23A8201AD151008EB13F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A7201AD151008EB13F /* Assets.xcassets */; };
 		6E5A23AB201AD151008EB13F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A9201AD151008EB13F /* LaunchScreen.storyboard */; };
+		6E7DA6C7201E633E00FCC180 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E7DA6C6201E633E00FCC180 /* red.png */; };
 		6EFFA071201D4FA400C6EBFF /* UsefulEquations.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		6E5A23A7201AD151008EB13F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E5A23AA201AD151008EB13F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6E5A23AC201AD151008EB13F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6E7DA6C6201E633E00FCC180 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = UsefulEquations.pdf; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -62,6 +64,7 @@
 				6E5A23A2201AD151008EB13F /* ViewController.swift */,
 				6E3581A9201B93DE009294C0 /* Calculation.swift */,
 				6E5A23A4201AD151008EB13F /* Main.storyboard */,
+				6E7DA6C6201E633E00FCC180 /* red.png */,
 				6E5A23A7201AD151008EB13F /* Assets.xcassets */,
 				6E5A23A9201AD151008EB13F /* LaunchScreen.storyboard */,
 				6E5A23AC201AD151008EB13F /* Info.plist */,
@@ -132,6 +135,7 @@
 				6EFFA071201D4FA400C6EBFF /* UsefulEquations.pdf in Resources */,
 				6E5A23AB201AD151008EB13F /* LaunchScreen.storyboard in Resources */,
 				6E5A23A8201AD151008EB13F /* Assets.xcassets in Resources */,
+				6E7DA6C7201E633E00FCC180 /* red.png in Resources */,
 				6E5A23A6201AD151008EB13F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,11 +9,98 @@
 import UIKit
 import CoreLocation
 import CoreMotion
+import AVFoundation
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
-
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource  {
     
+    
+
+    let simulatedAltitude = 70_000.00.feetToMeters
+    
+    var latOfDevice = 0.0
+    var longOfDevice = 0.0
+    var altOfDevice = 0.0
+    var pitchAndgleOfDevice = 0.0
+    var headingOfDevice = 0.0
+    var latOfPOI = 0.0
+    var longOfPOI = 0.0
+    
+    var coordsCalculations = Calculation()
+    var setOfCoords = [[String]]()
+    var setOfLat = [String]()
+    var allCoordsTaken = [Date:[Double]]()
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Table Items
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return setOfLat.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        
+        if cell == nil {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "cell");
+        }
+        cell!.textLabel?.text = setOfLat[indexPath.row]
+        return cell!
+    }
+    
+    
+    
+    // MARK: - Camera Items
+    let captureCoords = AVCaptureSession()
+    var backCamera: AVCaptureDevice?
+    var currentDevice: AVCaptureDevice?
+    var cameraPreview: AVCaptureVideoPreviewLayer?
+    
+    func selectInputDevice() {
+        let devices = AVCaptureDevice.default(for: AVMediaType.video)  //.defaultDevice(withMediaType: AVMediaTypeVideo)
+        if devices?.position == AVCaptureDevice.Position.back {
+            backCamera = devices
+        }
+        currentDevice = backCamera
+        do {
+            if let currentDevice = currentDevice {
+                let captureDeviceInput = try AVCaptureDeviceInput(device: currentDevice)
+                captureCoords.addInput(captureDeviceInput)
+            }
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func beginCamera(){
+        cameraPreview = AVCaptureVideoPreviewLayer(session: captureCoords)
+        view.layer.addSublayer(cameraPreview!)
+        
+        
+        view.bringSubview(toFront: stackViewOutlet)
+        view.bringSubview(toFront: crossHairImage)
+        view.bringSubview(toFront: captureButtonOutlet)
+        view.bringSubview(toFront: coordTable)
+        
+        
+        cameraPreview?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        cameraPreview?.frame = view.layer.bounds
+        captureCoords.startRunning()
+    }
+    
+    @IBOutlet var coordTable: UITableView!
+    @IBOutlet var stackViewOutlet: UIStackView!
+    @IBOutlet var crossHairImage: UIImageView!
+    @IBOutlet var captureButtonOutlet: UIButton!
     // < # placeholder_text/code #>
 
     // MARK: - Initial info.plist setup for camera usage
@@ -30,8 +117,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let pitch   = rpyattitude.pitch * (180.0 / Double.pi)
         let yaw     = rpyattitude.yaw * (180.0 / Double.pi)
         rollLabel.text  = "Roll: \(String(format: "%.0f°", roll))"
-        pitchLabel.text = "Pitch: \(String(format: "%.0f°", pitch))"
+        pitchLabel.text = "Pitch: \(String(format: "%.0f°", pitchAndgleOfDevice))"
         yawLabel.text   = "Yaw: \(String(format: "%.0f°", yaw))"
+        self.pitchAndgleOfDevice = pitch
+        
     }
     func getOrientation(){
         motionManager.deviceMotionUpdateInterval = 0.01
@@ -57,7 +146,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     // This function will be called whenever your heading is updated.
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        headingLabel.text = "Heading: \(String(format: "%.0f", newHeading.trueHeading))"
+        headingLabel.text = "Heading: \(String(format: "%.0f", headingOfDevice))"
+        self.headingOfDevice = newHeading.trueHeading
     }
     // call the below function in viewDidLoad()
     func getpositionPermission(){
@@ -71,27 +161,46 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locManager.startUpdatingHeading()
         locManager.startUpdatingLocation()
     }
+ 
+    @IBAction func captureCoordsButton(_ sender: UIButton) {
+        getPosition()
+        
+        let POI_Lat = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[0]
+        let POI_Long = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[1]
+
+        setOfLat.append("\(String(format: "%.4f", POI_Lat)):\(String(format: "%.4f", POI_Long))")
+        let lat = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[0]
+        let long = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[1]
+        
+        verAccLabel.text = "POI Lat: \(String(format: "%.6f", lat))"
+        horAccLabel.text = "POI long: \(String(format: "%.6f", long))"
+        yawLabel.text   = "Distance: \(String(format: "%.0f°", coordsCalculations.distanceToPOICalculated))"
+        
+        stackViewOutlet.isHidden = true
+        coordTable.reloadData()
+        
+        print(setOfCoords)
+    }
     // call the below function in viewDidLoad()
     func getPosition(){
         if let location = locManager.location {
             let latt = location.coordinate.latitude
             let long = location.coordinate.longitude
             let alt = location.altitude // in meters
-            let accuracyAlt = location.verticalAccuracy
-            let accuracyHorizontal = location.horizontalAccuracy
+            
             
             lattitudeLabel.text = "Lat: \(String(format: "%.2f", latt))"
             longitudeLabel.text = "Long: \(String(format: "%.2f", long))"
             altitudeLabel.text = "Alt: \(String(format: "%.2f", alt))"
-            verAccLabel.text = "Vert Acc: \(String(format: "%.2f", accuracyAlt))"
-            horAccLabel.text = "Horizontal Acc: \(String(format: "%.2f", accuracyHorizontal))"
             
-            /* - additional information available
-             let course = location.course
-             let accuracy = location.horizontalAccuracy
-             let speed = location.speed
-             let time = location.timestamp
-             */
+            verAccLabel.text = ""
+            horAccLabel.text = ""
+            
+            self.latOfDevice = latt
+            self.longOfDevice = long
+            self.altOfDevice = alt
+            
+            
         }
     }
     
@@ -110,6 +219,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         getpositionPermission()
         getOrientation()
         getPosition()
+        selectInputDevice()
+        beginCamera()
+        
+        coordTable.delegate = self
+        coordTable.dataSource = self
+
     }
 
     override func didReceiveMemoryWarning() {
