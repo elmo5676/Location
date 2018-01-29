@@ -38,48 +38,22 @@ struct Calculation {
         let b1 = (tan(latitudeAngleOfDevice.degreesToRadians)*tan(latitudeAngleOfDevice.degreesToRadians)) / (self.minEarthAxis_WGS84*self.minEarthAxis_WGS84)
         let c1 = 1.0/((a1+b1).squareRoot())
         let d1 = c1/(cos(latitudeAngleOfDevice.degreesToRadians))
-        print("\(d1): earthRadiusCalculated: in meters")
-        for _ in 0..<2 {
-            print("")
-        }
+        
         
         //2: centralAngleSolver()
         let a2 = d1 + altitudeOfDevice
-        print(a2)
         let b2 = sin(pitchAngleOfTheDevice)/d1
-        print(b2)
         let c2 = Double.pi - asin(a2*b2)
-        print(c2)
         let d2 = (180 - (pitchAngleOfTheDevice.radiansToDegrees + c2.radiansToDegrees)).degreesToRadians
-        print("\(d2): Central angle")
         
         //3: distanceSolver()
         let a3 = (d1*d2).metersToNauticalMiles
         let b3 = a3/60
-        print("\(a3): distanceToPOICalculated in NM")
-        
-        //equation #4 is used as a common sense check of the answers
-        //4: max distance (line of sight to the horizon) you can see from current altitude
-        let a4 = ((a2*a2)-(d1*d1)).squareRoot()
-        let maxPitchOfDevice = asin(d1/a2)
-        let maxCentralAngle = asin(a4/d1)
-        let maxLineOfSightDistance = d1*maxCentralAngle
-        for _ in 0..<2 {
-            print("")
-        }
-        print("\(maxLineOfSightDistance.metersToNauticalMiles): Max distance")
-        print("\(maxPitchOfDevice.radiansToDegrees): Max possible view angle")
-        print("\(maxCentralAngle.radiansToDegrees): Max central Angle in degrees")
-        for _ in 0..<2 {
-            print("")
-        }
         
         //5: coordinate for POI solver
         let a5 = headingAngleOfTheDevice_TN.degreesToRadians
         let lattitudeAngleOfPOI = (b3*sin(a5))+latitudeAngleOfDevice
         let longitudeAngleOfPOI = ((b3/cos(latitudeAngleOfDevice.degreesToRadians))*cos(a5))+longitudeAngleOfDevice
-        print("\(lattitudeAngleOfPOI): POI lat")
-        print("\(longitudeAngleOfPOI): POI long")
         
         self.latitudeAngleOfDevice = latitudeAngleOfDevice
         self.longitudeAngleOfDevice = longitudeAngleOfDevice
@@ -91,9 +65,7 @@ struct Calculation {
         self.distanceToPOICalculated = a3
         self.lattitudeAngleOfPOI = lattitudeAngleOfPOI
         self.longitudeAngleOfPOI = longitudeAngleOfPOI
-        
-        return [lattitudeAngleOfPOI, longitudeAngleOfPOI]
-        
+        return [lattitudeAngleOfPOI, longitudeAngleOfPOI, a3]
     }
 }
 

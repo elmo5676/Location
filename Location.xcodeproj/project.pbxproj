@@ -14,6 +14,7 @@
 		6E5A23A8201AD151008EB13F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A7201AD151008EB13F /* Assets.xcassets */; };
 		6E5A23AB201AD151008EB13F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E5A23A9201AD151008EB13F /* LaunchScreen.storyboard */; };
 		6E7DA6C7201E633E00FCC180 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E7DA6C6201E633E00FCC180 /* red.png */; };
+		6EC42B3F201F7233001245DF /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC42B3E201F7233001245DF /* TableViewController.swift */; };
 		6EFFA071201D4FA400C6EBFF /* UsefulEquations.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		6E5A23AA201AD151008EB13F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6E5A23AC201AD151008EB13F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E7DA6C6201E633E00FCC180 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
+		6EC42B3E201F7233001245DF /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		6EFFA06E201D4FA300C6EBFF /* UsefulEquations.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = UsefulEquations.pdf; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -64,6 +66,7 @@
 				6E5A23A2201AD151008EB13F /* ViewController.swift */,
 				6E3581A9201B93DE009294C0 /* Calculation.swift */,
 				6E5A23A4201AD151008EB13F /* Main.storyboard */,
+				6EC42B3E201F7233001245DF /* TableViewController.swift */,
 				6E7DA6C6201E633E00FCC180 /* red.png */,
 				6E5A23A7201AD151008EB13F /* Assets.xcassets */,
 				6E5A23A9201AD151008EB13F /* LaunchScreen.storyboard */,
@@ -150,6 +153,7 @@
 				6E5A23A3201AD151008EB13F /* ViewController.swift in Sources */,
 				6E3581AA201B93DE009294C0 /* Calculation.swift in Sources */,
 				6E5A23A1201AD151008EB13F /* AppDelegate.swift in Sources */,
+				6EC42B3F201F7233001245DF /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +297,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Caerus.Location;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -308,7 +312,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Caerus.Location;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

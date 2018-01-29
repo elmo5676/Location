@@ -28,7 +28,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     var coordsCalculations = Calculation()
     var setOfCoords = [[String]]()
-    var setOfLat = [String]()
+    var setOfLatLongs = [String]()
     var allCoordsTaken = [Date:[Double]]()
     
     
@@ -39,7 +39,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     // MARK: - Table Items
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return setOfLat.count
+        return setOfLatLongs.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,11 +52,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: "cell");
         }
-        cell!.textLabel?.text = setOfLat[indexPath.row]
+        cell!.textLabel?.text = setOfLatLongs[indexPath.row]
         return cell!
     }
+//    // Override to support editing the table view.
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the data source
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//    }
     
-    
+
     
     // MARK: - Camera Items
     let captureCoords = AVCaptureSession()
@@ -85,7 +94,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         cameraPreview = AVCaptureVideoPreviewLayer(session: captureCoords)
         view.layer.addSublayer(cameraPreview!)
         
-        
+        view.bringSubview(toFront: buttonStack)
         view.bringSubview(toFront: stackViewOutlet)
         view.bringSubview(toFront: crossHairImage)
         view.bringSubview(toFront: captureButtonOutlet)
@@ -162,25 +171,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         locManager.startUpdatingLocation()
     }
  
+    // MARK: - CaptureButton
     @IBAction func captureCoordsButton(_ sender: UIButton) {
         getPosition()
         
+        
         let POI_Lat = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[0]
         let POI_Long = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[1]
+        let POI_Dis = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[2]
 
-        setOfLat.append("\(String(format: "%.4f", POI_Lat)):\(String(format: "%.4f", POI_Long))")
-        let lat = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[0]
-        let long = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[1]
+        setOfLatLongs.append("""
+            Lat: \(String(format: "%.3f", POI_Lat)):
+            Long: \(String(format: "%.3f", POI_Long)):
+            Bearing: \(String(format: "%.0f", headingOfDevice))°
+            Range: \(String(format: "%.1f", POI_Dis))
+            """)
         
-        verAccLabel.text = "POI Lat: \(String(format: "%.6f", lat))"
-        horAccLabel.text = "POI long: \(String(format: "%.6f", long))"
-        yawLabel.text   = "Distance: \(String(format: "%.0f°", coordsCalculations.distanceToPOICalculated))"
+        
+//        let lat = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[0]
+//        let long = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[1]
+//        let distance = coordsCalculations.coordsOfPOICalculate(latitudeAngleOfDevice: latOfDevice, longitudeAngleOfDevice: longOfDevice, altitudeOfDevice: simulatedAltitude, pitchAngleOfTheDevice: pitchAndgleOfDevice.degreesToRadians, headingAngleOfTheDevice_TN: headingOfDevice)[3]
+//
+//        verAccLabel.text = "POI Lat: \(String(format: "%.6f", lat))"
+//        horAccLabel.text = "POI long: \(String(format: "%.6f", long))"
+//        yawLabel.text   = "Distance: \(String(format: "%.0f°", coordsCalculations.distanceToPOICalculated))"
         
         stackViewOutlet.isHidden = true
         coordTable.reloadData()
         
-        print(setOfCoords)
+        print(setOfLatLongs)
     }
+    
+    @IBOutlet weak var buttonStack: UIStackView!
+    @IBAction func clearTableButtong(_ sender: UIButton) {
+        setOfLatLongs.removeAll()
+        coordTable.reloadData()
+    }
+    
     // call the below function in viewDidLoad()
     func getPosition(){
         if let location = locManager.location {
@@ -221,6 +248,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         getPosition()
         selectInputDevice()
         beginCamera()
+        
+        
         
         coordTable.delegate = self
         coordTable.dataSource = self
